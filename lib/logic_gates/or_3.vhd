@@ -3,7 +3,7 @@ USE ieee.std_logic_1164.ALL;
 
 ENTITY or_3 IS
 
-	PORT(in_a, in_b, in_c: IN BIT; output: OUT BIT);
+	PORT(in_a, in_b, in_c: IN STD_LOGIC; output: OUT STD_LOGIC);
 	
 END or_3;
 
