@@ -1,3 +1,6 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
 ENTITY d_type_flip_flop IS
 
 	PORT(clock, input: IN STD_LOGIC; output, inv_output: INOUT STD_LOGIC);

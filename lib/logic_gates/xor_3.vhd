@@ -1,3 +1,6 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
 ENTITY xor_3 IS 
 
 	PORT(in_a, in_b, in_c: IN STD_LOGIC; output: OUT STD_LOGIC);

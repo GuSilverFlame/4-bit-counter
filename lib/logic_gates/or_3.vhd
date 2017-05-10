@@ -1,3 +1,6 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
 ENTITY or_3 IS
 
 	PORT(in_a, in_b, in_c: IN BIT; output: OUT BIT);
