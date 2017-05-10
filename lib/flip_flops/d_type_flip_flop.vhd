@@ -15,7 +15,7 @@ ARCHITECTURE data_flow OF d_type_flip_flop IS
 BEGIN
 
 	inv_in <= NOT input;
-	output <= (input NAND clock) NOR inv_output;
-	inv_output <= (inv_in NAND clock) NOR output; 
+	output <= (input NAND clock) NAND inv_output;
+	inv_output <= (inv_in NAND clock) NAND output;
 	
 END data_flow;
