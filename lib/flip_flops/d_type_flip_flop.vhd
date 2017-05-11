@@ -8,14 +8,18 @@ ENTITY d_type_flip_flop IS
 END d_type_flip_flop;
 
 
-ARCHITECTURE data_flow OF d_type_flip_flop IS
-
-	SIGNAL inv_in: STD_LOGIC;
+ARCHITECTURE behaviour OF d_type_flip_flop IS
 	
 BEGIN
 
-	inv_in <= NOT input;
-	output <= (input NAND clock) NAND inv_output;
-	inv_output <= (inv_in NAND clock) NAND output;
-	
-END data_flow;
+    PROCESS (clock) IS
+    BEGIN
+
+        IF rising_edge(clock) THEN
+            output <= input;
+            inv_output <= NOT input;
+        END IF;
+
+   END PROCESS;
+
+END behaviour;
