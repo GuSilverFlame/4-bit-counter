@@ -47,18 +47,15 @@ ARCHITECTURE structural OF single_digit_decimal_counter IS
 BEGIN
 
 	-- enablers propagate
-	pro0: prop PORT MAP(output(0), enable_in, p_out(0),e_mid(0));
-	pro1: prop PORT MAP(output(1), e_mid(0), p_out(1),e_mid(1));
-	pro2: prop PORT MAP(output(2), e_mid(1), p_out(2),e_mid(2));
+	pro0: prop PORT MAP(output(0), enable_in, norm_out(0),e_mid(0));
+	pro1: prop PORT MAP(output(1), e_mid(0), norm_out(1),e_mid(1));
+	pro2: prop PORT MAP(output(2), e_mid(1), norm_out(2),e_mid(2));
 	pro3: prop PORT MAP(
 		input => output(3), 
 		carry_in => e_mid(2), 
-		output => p_out(3),
+		output => norm_out(3),
 		carry_out => OPEN
 	);
-	
-	-- true reset
-	tr: normalizer PORT MAP(p_out, true_reset, norm_out);
 	
 	-- reset over limit
 	lm: counterlimiter PORT MAP (enable_in, limit, norm_out, lm_out);
@@ -67,27 +64,30 @@ BEGIN
 	d0: dflipflop PORT MAP (
 		clock => clock, 
 		input => lm_out(0),
-		output => output(0),
+		output => p_out(0),
 		inv_output => OPEN
 	);
 	
 	d1: dflipflop PORT MAP (
 		clock => clock, 
 		input => lm_out(1),
-		output => output(1),
+		output => p_out(1),
 		inv_output => OPEN
 	);
 	d2: dflipflop PORT MAP (
 		clock => clock, 
 		input => lm_out(2),
-		output => output(2),
+		output => p_out(2),
 		inv_output => OPEN
 	);
 	d3: dflipflop PORT MAP (
 		clock => clock, 
 		input => lm_out(3),
-		output => output(3),
+		output => p_out(3),
 		inv_output => OPEN
 	);
+	
+	-- true reset
+	tr: normalizer PORT MAP(p_out, true_reset, output);
 	
 END structural;
