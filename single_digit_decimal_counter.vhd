@@ -6,7 +6,8 @@ ENTITY single_digit_decimal_counter IS
 	PORT(
 		enable_in, true_reset, clock: IN STD_LOGIC;
 		limit: IN STD_LOGIC_VECTOR(3 DOWNTO 0); 
-		output: INOUT STD_LOGIC_VECTOR(3 DOWNTO 0)
+		output: INOUT STD_LOGIC_VECTOR(3 DOWNTO 0);
+		carry: INOUT STD_LOGIC
 	);
 	
 END single_digit_decimal_counter;
@@ -17,7 +18,8 @@ ARCHITECTURE structural OF single_digit_decimal_counter IS
 		PORT(
 			enable: IN STD_LOGIC;
 			limit, comparison: IN STD_LOGIC_VECTOR(3 DOWNTO 0); 
-			output: OUT STD_LOGIC_VECTOR(3 DOWNTO 0)
+			output: OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
+			carry: INOUT STD_LOGIC
 		);
 	END COMPONENT;
 	
@@ -58,7 +60,7 @@ BEGIN
 	);
 	
 	-- reset over limit
-	lm: counterlimiter PORT MAP (enable_in, limit, norm_out, lm_out);
+	lm: counterlimiter PORT MAP (enable_in, limit, norm_out, lm_out, carry);
 	
 	-- set flip-flops get next output
 	d0: dflipflop PORT MAP (
