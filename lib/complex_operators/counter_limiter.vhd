@@ -6,7 +6,8 @@ ENTITY counter_limiter IS
 	PORT(
 		enable: IN STD_LOGIC;
 		limit, comparison: IN STD_LOGIC_VECTOR(3 DOWNTO 0); 
-		output: OUT STD_LOGIC_VECTOR(3 DOWNTO 0)
+		output: OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
+		carry: INOUT STD_LOGIC
 	);
 	
 END counter_limiter;
@@ -39,20 +40,19 @@ ARCHITECTURE structural OF counter_limiter IS
 	FOR ALL:subtractor4bits USE ENTITY work.full_subtractor_4_bit(structural);
 	FOR ALL: not1 USE ENTITY work.not_1 (data_flow);
 		
-	SIGNAL borrow, reverse_borrow: STD_LOGIC;
+	SIGNAL nc: STD_LOGIC;
 	
 BEGIN
 	
-	calculate: subtractor4bits	
-		PORT MAP(
-			bin => '0',
-			enable => enable,
-			x => limit,
-			y => comparison, 
-			output => OPEN, 
-			bout => borrow
-		);
-	invert: not1 PORT MAP(borrow, reverse_borrow);
-	verify: fourbitvectorenabler PORT MAP(comparison, reverse_borrow, output);
+	calculate: subtractor4bits	PORT MAP(
+		bin => '0',
+		enable => enable,
+		x => limit,
+		y => comparison,
+		output => OPEN,
+		bout => carry
+	);
+	invert: not1 PORT MAP(carry, nc);
+	verify: fourbitvectorenabler PORT MAP(comparison, nc, output);
 		
 END structural;
